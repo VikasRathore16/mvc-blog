@@ -1,31 +1,35 @@
 <?php
 
-// $blog = new Blog();
+use App\Blog;
+use App\User;
 
-// if (isset($_POST['submit'])) {
-//     // echo $_POST['name'];
-//     $username = isset($_POST['name']) ? $_POST['name'] : '';
-//     $email = isset($_POST['email']) ? $_POST['email'] : '';
-//     $password = isset($_POST['password']) ? $_POST['password'] : '';
-//     $confirm = isset($_POST['confirm']) ? $_POST['confirm'] : '';
-//     if ($password != $confirm) {
-//         $conf = "Not match";
-//     }
-//     if ($password == $confirm && $password != '') {
-//         $User = new User();
+error_reporting(0);
+require_once '../vendor/autoload.php';
 
-//         $check = $User->getUser($email);
-//         // print_r($check);
-//         if ($check['email'] == $email) {
-//             $msg = 1;
-//         } else {
-//             $User->addUser($username, $email, $password);
-//             $thanks = 1;
-//         }
-//     }
-// }
+$blog = new Blog();
 
+if (isset($_POST['submit'])) {
+    // echo $_POST['name'];
+    $username = isset($_POST['name']) ? $_POST['name'] : '';
+    $email = isset($_POST['email']) ? $_POST['email'] : '';
+    $password = isset($_POST['password']) ? $_POST['password'] : '';
+    $confirm = isset($_POST['confirm']) ? $_POST['confirm'] : '';
+    if ($password != $confirm) {
+        $conf = "Not match";
+    }
+    if ($password == $confirm && $password != '') {
+        $User = new User();
 
+        $check = $User->getUser($email);
+        // print_r($check);
+        if ($check['email'] == $email) {
+            $msg = 1;
+        } else {
+            $User->addUser($username, $email, $password);
+            $thanks = 1;
+        }
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,7 +44,7 @@
 </head>
 
 <body>
-    <?php echo $data['blog'] ?>
+    <?php echo $blog->blogheader(); ?>
     <div class="container mt-3">
 
 
@@ -76,15 +80,15 @@
                         }
                         if ($thanks) {
                             echo "Thanks for Sign Up wait for Account Approval. After Approval you can login from below link";
-                        ?>
+                            ?>
 
                             <div class=" mb-3 small">
                                 <label>
                                     <a href="login.php">Log In</a>
                                 </label>
                             </div><?php
-                                }
-                                    ?>
+                        }
+                        ?>
                     </label>
                 </div>
                 <button class="w-75 btn btn-lg btn-primary" type="submit" name="submit" value="submit">Sign Up</button>
